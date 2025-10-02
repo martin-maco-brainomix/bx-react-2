@@ -1,0 +1,22 @@
+@use 'constants';
+
+.scan-viewer {
+  width: constants.$default-canvas-dimension;;
+  height: constants.$default-canvas-dimension;
+  background-color: black;
+  color: white;
+  position: relative;
+
+  .viewer-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 16px;
+  }
+
+  canvas {
+    position: absolute;
+  }
+}
