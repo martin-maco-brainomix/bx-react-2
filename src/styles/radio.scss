@@ -1,0 +1,61 @@
+$radio-size: 24px;
+
+.bx-radio {
+  width: fit-content;
+
+  label {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+
+    input[type="radio"] {
+      width: $radio-size;
+      height: $radio-size;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+      position: absolute;
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+
+      // Custom checkbox box
+      &::before {
+        content: '';
+        display: inline-block;
+        width: $radio-size;
+        height: $radio-size;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        background-color: white;
+        transition: all 0.2s;
+        flex-shrink: 0;
+      }
+    }
+
+    // Checked state
+    input[type="radio"]:checked + div::before {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+  }
+
+  &.disabled {
+    label {
+      opacity: 0.5;
+      cursor: default;
+
+      input[type="radio"] {
+        cursor: default;
+      }
+    }
+  }
+}

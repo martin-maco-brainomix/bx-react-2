@@ -1,0 +1,71 @@
+.bx-button {
+  // Reset default button styles
+  border: none;
+  outline: none;
+  
+  // Base styles
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  
+  &.primary {
+    // Primary variant (default)
+    background-color: #2563eb;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    // Hover state
+    &:hover:not(:disabled) {
+      background-color: #1d4ed8;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    // Active state
+    &:active:not(:disabled) {
+      background-color: #1e40af;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    // Focus state
+    &:focus-visible {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+    }
+
+    // Disabled state
+    &:disabled,
+    &.disabled {
+      background-color: #9ca3af;
+      cursor: not-allowed;
+      opacity: 0.6;
+      box-shadow: none;
+    }
+  }
+
+  // Secondary variant
+  &.secondary {
+    background-color: #6b7280;
+    color: white;
+    
+    &:hover:not(:disabled) {
+      background-color: #4b5563;
+    }
+    
+    &:active:not(:disabled) {
+      background-color: #374151;
+    }
+    
+    &:focus-visible {
+      outline-color: #6b7280;
+    }
+    
+    &:disabled,
+    &.disabled {
+      background-color: #d1d5db;
+    }
+  }
+}
