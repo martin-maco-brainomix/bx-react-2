@@ -1,4 +1,4 @@
-import { Planes } from './constants.js'
+import { Planes, mprData } from './constants.js'
 
 const { AXIAL, CORONAL, SAGITTAL } = Planes
 
@@ -8,11 +8,10 @@ const { AXIAL, CORONAL, SAGITTAL } = Planes
  * @param {Object} params - Parameters for rendering the MPR view.
  * @param {string} params.plane - The plane to render (e.g., CORONAL, SAGITTAL, AXIAL).
  * @param {Object} params.point - The target point in the MPR space, with `x`, `y`, and `z` as coordinates.
- * @param {Object} params.mprData - The MPR data, represented as a collection of 2D image slices.
  * @param {number} params.height - The height of the image stack.
  * @returns {Array} The extracted scan data for the specified plane.
  */
-export const renderMprByPlane = ({ plane, point, mprData, height }) => {
+export const renderMprByPlane = ({ plane, point, height }) => {
   let scanData = []
 
   switch (plane) {

@@ -17,11 +17,11 @@ export const Main = () => {
   const [data, setData] = useState({})
   const [loading, setLoading] = useState(false)
   const [mprEnabled, setMprEnabled] = useState(false)
-  const [rangeValue, setRangeValue] = useState(0)
   const [plane, setPlane] = useState(Planes.AXIAL)
   const [windowing, setWindowing] = useState({ level: -1000, width: 1 })
+  const [point, setPoint] = useState({ x: 0, y: 0, z: 0 })
 
-  const { size_x, size_z } = data
+  const { size_x, size_z, size_y } = data
 
   const handleOnMprEnable = () => {
     setMprEnabled(true)
@@ -33,6 +33,7 @@ export const Main = () => {
       .then((response) => response.json())
       .then((result) => {
         setData(result.data)
+        setWindowing({ level: result.data.windowing.level, width: result.data.windowing.width })
       })
       .finally(() => setLoading(false))
   }
@@ -41,8 +42,8 @@ export const Main = () => {
     setPlane(value)
   }
 
-  const handleOnRangeChange = (value) => {
-    setRangeValue(value - 1)
+  const handleOnPointChange = (value) => {
+    setPoint(value)
   }
 
   const handleOnWindowingChange = (level, width) => {
@@ -66,14 +67,46 @@ export const Main = () => {
         <div style={{ width: `${size_x ?? DEFAULT_IMAGE_SIZE}px` }}>
           Axial:
           <Range
-            value={rangeValue + 1}
+            value={point.z + 1}
             min={1}
             max={size_z || 0}
-            onChange={handleOnRangeChange}
+            onChange={(newValue) =>
+              handleOnPointChange({ x: point.x, y: point.y, z: newValue - 1 })
+            }
             className="scan-viewer-range"
             annotations={true}
             valuePosition={RangeValuePosition.bottom}
-            disabled={!size_z}
+            disabled={!size_z || plane !== Planes.AXIAL}
+          />
+        </div>
+        <div style={{ width: `${size_x ?? DEFAULT_IMAGE_SIZE}px` }}>
+          Coronal:
+          <Range
+            value={point.y + 1}
+            min={1}
+            max={size_y || 0}
+            onChange={(newValue) =>
+              handleOnPointChange({ x: point.x, y: newValue - 1, z: point.z })
+            }
+            className="scan-viewer-range"
+            annotations={true}
+            valuePosition={RangeValuePosition.bottom}
+            disabled={plane !== Planes.CORONAL}
+          />
+        </div>
+        <div style={{ width: `${size_x ?? DEFAULT_IMAGE_SIZE}px` }}>
+          Sagittal:
+          <Range
+            value={point.x + 1}
+            min={1}
+            max={size_x || 0}
+            onChange={(newValue) =>
+              handleOnPointChange({ x: newValue - 1, y: point.y, z: point.z })
+            }
+            className="scan-viewer-range"
+            annotations={true}
+            valuePosition={RangeValuePosition.bottom}
+            disabled={plane !== Planes.SAGITTAL}
           />
         </div>
       </>
@@ -122,7 +155,7 @@ export const Main = () => {
         <div className="scan-viewer-container">
           <div className="scan-viewer-wrapper">
             <ScanViewer
-              value={rangeValue}
+              point={point}
               spec={data}
               windowing={windowing}
               plane={plane}
